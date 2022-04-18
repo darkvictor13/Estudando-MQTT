@@ -1,0 +1,90 @@
+\documentclass[12pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage{breqn}
+\usepackage{listings}
+
+\graphicspath{{./images/}}
+\setbeamertemplate{caption}[numbered]
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{laranja_claro}{rgb}{1,0.9,0.5}
+\definecolor{laranja_escuro}{rgb}{1,0.5,0.2}
+\definecolor{azul_claro}{rgb}{0.5,0.9,1}
+
+\lstset{frame=tb,
+    language=C,
+    frame=tb,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    breakatwhitespace=true,
+    xleftmargin=.05\textwidth,
+    xrightmargin=.05\textwidth,
+    tabsize=4,
+}
+
+\definecolor{azul}{rgb}{0,0,.5}
+\setbeamertemplate{navigation symbols}{}
+
+\usetheme{Frankfurt}
+\usecolortheme[named=azul]{structure}
+
+%% Definindo o Autor e o título
+\newcommand{\prof}{Renato Bobsin Machado}
+\newcommand{\materia}{Redes de Computadores}
+
+\author[Grupo: MQTT]{Larissa L. Wong \and Marco A. G. Pedroso \and Victor E. Almeida}
+
+\title{Colocar Titulo}
+\subtitle{Demonstrando o software}
+\date{\today}
+\institute{UNIOESTE}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Conteúdo}
+\tableofcontents
+\end{frame}
+
+\section{Introdução}\label{Introdução}
+\begin{frame}
+    \frametitle{Mão na massa!!}
+    \begin{figure}
+        \centering
+        \includegraphics[width=.3\textwidth]{pizza.png}
+        \includegraphics[width=.3\textwidth]{rolo.png}
+        \includegraphics[width=.3\textwidth]{burrito.png}
+    \end{figure}
+\end{frame}
+
+\section{Conclusão}
+\begin{frame}
+    \frametitle{Agradecimentos}
+    \centering
+    \Huge{Perguntas?}
+    \begin{figure}
+        \centering
+        \includegraphics[width=.3\textwidth]{alerta.png}
+        \includegraphics[width=.3\textwidth]{perigo.png}
+        \includegraphics[width=.3\textwidth]{eletricidade.png}
+    \end{figure}
+    \Huge{Obrigado pela atenção}
+\end{frame}
+
+\end{document}
