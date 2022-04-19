@@ -31,7 +31,7 @@ void callbackMqtt(char* topic, byte* message, unsigned int length);
 void wifiConnect();
 
 /**
- * @brief Reconecta ao broker
+ * @brief Conecta ao broker
  * 
  * @pre Nenhuma
  * @post Esp conectado ao broker ou loop infinito
@@ -47,8 +47,8 @@ void MqttConnect();
 void taskSendTemperature(void*);
 
 Adafruit_BMP280 sensor;
-WiFiClient wifiClient;
 
+WiFiClient wifiClient;
 /*
 inicializa o mqtt com todos os parâmetros necessários, sendo:
     - IP do broker
@@ -62,8 +62,15 @@ PubSubClient mqttClient(RASP_BROKER_IP, RASP_BROKER_PORT, callbackMqtt, wifiClie
 TaskHandle_t handle = NULL;
 
 void setup() {
-    wifiConnect();
+	if (!sensor.begin(BMP280_ADDRESS)) {
+		if(!sensor.begin(BMP280_ADDRESS_ALT)) {
+			LOGE("Falha ao iniciar Sensor");
+			delay(1000);
+			ESP.restart();
+		}
+	}
     pinMode(LED_PIN, OUTPUT);
+    wifiConnect();
 	MqttConnect();
 	xTaskCreate(taskSendTemperature, "send temperature", 20000, NULL, 1, &handle);
 }
@@ -135,6 +142,6 @@ void taskSendTemperature(void*) {
 		} else {
 			LOGE("Não enviei dado");
 		}
-		vTaskDelay(5000 / portTICK_RATE_MS);
+		vTaskDelay(WAIT_TIME / portTICK_RATE_MS);
 	}
 }
