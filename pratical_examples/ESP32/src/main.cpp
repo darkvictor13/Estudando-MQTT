@@ -13,7 +13,6 @@ static const char TAG[] = "main.cpp";
 /**
  * @brief Função executada quando o tópico em que o esp está
  * inscrito recebe uma mensagem
- * 
  * @param topic 
  * @param message 
  * @param length 
@@ -50,29 +49,30 @@ Adafruit_BMP280 sensor;
 
 WiFiClient wifiClient;
 /*
-inicializa o mqtt com todos os parâmetros necessários, sendo:
-    - IP do broker
-    - porta utilizada para comunicação
-    - função chamada no callbackMqtt
-    - Cliente Wifi
-		PubSubClient(IPAddress, uint16_t, MQTT_CALLBACK_SIGNATURE,Client& client);
+   inicializa o mqtt com todos os parâmetros necessários, sendo:
+   - IP do broker
+   - porta utilizada para comunicação
+   - função chamada no callbackMqtt
+   - Cliente Wifi
+
+    PubSubClient(IPAddress, uint16_t, MQTT_CALLBACK_SIGNATURE,Client& client);
 */
 PubSubClient mqttClient(RASP_BROKER_IP, RASP_BROKER_PORT, callbackMqtt, wifiClient);
 
 TaskHandle_t handle = NULL;
 
 void setup() {
-	if (!sensor.begin(BMP280_ADDRESS)) {
-		if(!sensor.begin(BMP280_ADDRESS_ALT)) {
-			LOGE("Falha ao iniciar Sensor");
-			delay(1000);
-			ESP.restart();
-		}
-	}
+    if (!sensor.begin(BMP280_ADDRESS)) {
+        if(!sensor.begin(BMP280_ADDRESS_ALT)) {
+            LOGE("Falha ao iniciar Sensor");
+            delay(1000);
+            ESP.restart();
+        }
+    }
     pinMode(LED_PIN, OUTPUT);
     wifiConnect();
-	MqttConnect();
-	xTaskCreate(taskSendTemperature, "send temperature", 20000, NULL, 1, &handle);
+    MqttConnect();
+    xTaskCreate(taskSendTemperature, "send temperature", 20000, NULL, 1, &handle);
 }
 
 void loop() {
@@ -85,8 +85,8 @@ void loop() {
 void callbackMqtt(char* topic, byte* message, unsigned int length) {
     LOGD("Chegou um dado Topico [%s]", topic);
     if (strcmp(topic, SUBSCRIBE_TOPIC)) {
-		return ;
-	}
+        return ;
+    }
     char buffer[length + 1];
     for(int i = 0; i < length; i++) {
         buffer[i] = message[i];
@@ -111,7 +111,7 @@ void wifiConnect() {
     }
 
     if (WiFi.status() != WL_CONNECTED) {
-		LOGE("Falha ao Conectar no Wifi");
+        LOGE("Falha ao Conectar no Wifi");
         delay(1000);
         ESP.restart();
     }
@@ -124,24 +124,24 @@ void MqttConnect() {
         if (mqttClient.connect(ESP_ID, RASP_BROKER_USER, RASP_BROKER_PASS)) {
             LOGD("Connectado ao Broker");
             mqttClient.subscribe(SUBSCRIBE_TOPIC);
-			return;
+            return;
         }
         LOGD("Reconectando to Broker MQTT...");
     }
 }
 
 void taskSendTemperature(void*) {
-	char temperature_buffer[8];
-	while (true) {
-		const auto temperature = sensor.readTemperature();
-		LOGD("Temperatura lida = %.2f", temperature);
-		sprintf(temperature_buffer, "%.2f", temperature);
-		LOGD("Temperatura convertida = %.2f", temperature_buffer);
-		if (mqttClient.publish(PUBLISH_TOPIC, temperature_buffer)) {
-			LOGD("Enviei dado");
-		} else {
-			LOGE("Não enviei dado");
-		}
-		vTaskDelay(WAIT_TIME / portTICK_RATE_MS);
-	}
+    char temperature_buffer[8];
+    while (true) {
+        const auto temperature = sensor.readTemperature();
+        LOGD("Temperatura lida = %.2f", temperature);
+        sprintf(temperature_buffer, "%.2f", temperature);
+        LOGD("Temperatura convertida = %.2f", temperature_buffer);
+        if (mqttClient.publish(PUBLISH_TOPIC, temperature_buffer)) {
+            LOGD("Enviei dado");
+        } else {
+            LOGE("Não enviei dado");
+        }
+        vTaskDelay(WAIT_TIME / portTICK_RATE_MS);
+    }
 }
