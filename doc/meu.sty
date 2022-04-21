@@ -1,0 +1,157 @@
+\ProvidesPackage{meu}
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[portuguese]{babel}
+\RequirePackage{titlesec}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{titling}
+\RequirePackage{indentfirst}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+\RequirePackage{colortbl}
+\RequirePackage{color}
+\RequirePackage[table]{xcolor}
+\RequirePackage{listings}
+\RequirePackage{fmtcount}
+\RequirePackage{framed}
+\RequirePackage{enumitem}
+\RequirePackage{lastpage}
+\RequirePackage[hyphens]{url}
+\RequirePackage{hyperref}
+\RequirePackage{tikz}
+\RequirePackage{tikz -timing}
+\usetikzlibrary{karnaugh}
+\RequirePackage{mathtools}
+\RequirePackage{amsmath}
+\RequirePackage[brazilian,hyperpageref]{backref}
+\RequirePackage[num,overcite,abnt-emphasize=bf]{abntex2cite}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+
+\graphicspath{{./images/}}
+\citebrackets[]
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{laranja_claro}{rgb}{1,0.9,0.5}
+\definecolor{laranja_escuro}{rgb}{1,0.5,0.2}
+\definecolor{azul_claro}{rgb}{0.5,0.9,1}
+
+\lstset{frame=tb,
+  language=C,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=4
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	filecolor=magenta,      
+	urlcolor=blue,
+	citecolor=black,
+}
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+  \ifcase #1 %
+    Nenhuma citação no texto.%
+    \or
+    Citado na página #2.%
+  \else
+    Citado nas páginas #2.%
+\fi}%
+% ---
+
+\newcommand{\prof}{Renato Bobsin Machado}
+\newcommand{\materia}{Redes de Computadores}
+\author{Larissa Lewartoski Wong\and\\Marco A. Guerra\and\\Victor E. Almeida}
+\title{Protocolo MQTT para sistemas de IoT}
+\date{\today}
+
+%% zera a página
+\fancyfoot[C]{}
+%% linhas no inicio e fim da página
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+
+%% Definindo espaçamento
+%\titlespacing{\section}{0pt}{*2}{*1.1}
+%%\titlespacing{\subsection}{}{}{}
+
+%%Definindo formato de títulos
+%%\titleformat{comando}[formato, ex:wrap]{mudar fontes}{antes do separador}{separador}{depois do separador}[no fim do comando]
+%\titleformat{\section}
+%{\Large\bfseries}
+%{\thesection}
+%{1cm}
+%{}[\titlerule]
+
+%% Pré-condição: setar as variáveis
+								 %\prof(newcommand)
+								 %\author
+								 %\date
+\newcommand{\capa}{
+\begin{titlepage}
+	\centering
+	\thispagestyle{fancy}
+
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft}
+			\includegraphics[scale=0.6]{logo_unioeste.jpg}\\[1.0 cm]
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}{0.5\textwidth}
+		\begin{flushright}\large
+			\textsc{\LARGE\textbf{UNIOESTE}}\\
+			\vspace{1cm}
+			Universidade Estadual\\do Oeste do Paraná
+		\end{flushright}
+	\end{minipage}
+	\vspace*{4.5 cm}
+
+	{\huge\bfseries\thetitle}\\
+	\rule{\linewidth}{0.2 mm}\\[1.5 cm]
+	
+	\vspace{2cm}
+	\begin{minipage}[t]{0.4\textwidth}
+		\begin{flushleft}\large
+			\emph{Professor:}\\
+			\prof\\
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}[t]{0.5\textwidth}
+
+		\begin{flushright}\large
+			\emph{Alunos:}\\
+			\theauthor
+		\end{flushright}
+
+	\end{minipage}\\[2 cm]
+	
+	\vfill\thedate
+	\end{titlepage}
+
+	\pagestyle{fancy}
+	\fancyfoot[L]{Matéria:~\materia}
+	\fancyfoot[R]{Prof:~\prof}
+	\fancyhead[L]{}
+	\fancyhead[R]{página:~\thepage/\pageref{LastPage}}
+}

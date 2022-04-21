@@ -1,0 +1,94 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{meu}
+
+\begin{document}
+\capa
+\tableofcontents
+\listoffigures
+\listoftables
+\cleardoublepage
+
+\section{Introdução}
+\subsection{O que é IOT}\label{O que é IOT}
+
+O termo \textit{Internet of Things (IOT)}, em português internet das coisas foi elaborado pelo britânico, Kevin Ashton, em 1999\cite{5} e se refere de forma geral a uma rede que conecta diversas ``coisas'' a internet, através de software, com o objetivo de trocar informações\cite{defIot}, tais ``coisas'' podem ser sensores, microcontroladores ou até mesmo objetos que nunca imaginamos tais como geladeiras, televisores, entre outros.
+
+\subsection{As camadas do IOT}\label{As camadas do IOT}
+
+A estrutura do \textit{internet of things} é baseada em três camadas principais\cite{5}:
+  \begin{itemize}
+      \item \textbf{Camada de percepção}: É uma camada que envolve sensores, hardware e obtém-se dados relevantes a respeito dos fenômenos meteorológicos, biológicos ou físicos tais como  temperatura e umidade do solo\cite{3}, do ar\cite{9}, índice de área foliar\cite{8}, quantidade de gás SO$_{2}$\cite{13}, PH do solo\cite{13} entre muitos outros.
+      %\item \textbf{Camada de comunicação}: Responsável por enviar os dados coletados pela camada de percepção supracitada para servidores ou aplicações na nuvem, de forma geral para algum tipo de armazenamento. Possuindo diversos protocolos de comunicação tais como \textbf{Ipv4} e \textbf{Ipv6}\cite{camada2}.
+      \item \textbf{Camada de comunicação}: Responsável por enviar os dados coletados pela camada de percepção supracitada para outras camadas, quer sejam aplicações que vão analisar tais dados ou para grandes bancos de dados ou até mesmo para serviços na nuvem.
+      \item \textbf{Camada de aplicação}: camada a qual trás sentido aos dados coletados pelos sensores, pois é nesse momento que ocorre o processamento dos dados e a apresentação dos mesmos. Nos trabalhos lidos durante a produção desta revisão bibliográfica, essa camada será responsável principalmente por mostrar ao agricultor informações relevantes de forma simples e compreensível, bem como informá-lo qual o melhor momento para plantar\cite{1}, ou em quais lugares da plantação tem doenças\cite{2}.
+      \end{itemize}
+teste\cite{performance_mqtt}
+
+\section{História}
+\subsection{MQTT}\label{MQTT}
+O Protocolo de comunicação MQTT começou a ser idealizado e planejado durante a década de 1990\cite{historia_breve_resumo_mqtt}, pelos engenheiros Andy Stanford-Clark da IBM e Arlen Nipper da Cirrus Link/Eurotech\cite{historia_introduction_mqtt}.
+
+Os inventores estavam trabalhando na conexão de oleodutos via satélite, visto a limitação das conexões e hardware da época era necessário um protocolo de comunicação que utilizasse pouca largura de banda e pouca energia do dispositivo, tendo isso em mente trassaram os seguintes requisitos\cite{historia_introduction_mqtt}:
+\begin{itemize}
+    \item Implementação simples;
+    \item Uso de QoS, \textit{Quality of Service} por quem publica a mensagem;
+    \item Uso eficiente de largura de banda, baixo \textit{overhead};
+    \item Baixo custo energético para envio;
+    \item Possibilidade de enviar qualquer tipo de dado;
+    \item Possibilidade de manter conexões ativas, prontas para enviar e receber dados;
+\end{itemize}
+
+Uma vez projetado, foi implementado sua primeira versão no ano de 1999 e batizado MQTT, \textit{MQ Telemetry Transport}, em referência ao produto da IBM MQ Series, que atua na camada de transporte sendo uma ferramenta importante em arquiteturas orientadas a serviços\cite{historia_ibm_mq}.
+
+Esse protocolo de comunicação foi muito utilizado dentro da IBM em diversas aplicações, produtos e serviços desde sua criação até 2010\cite{historia_introduction_mqtt}. Porém nesse momento da história viu-se a possível utilidade da tecnologia em aplicações IoT, com isso o MQTT deixou de ser \textit{software} proprietário apenas utilizado em sistemas embarcados da IBM, para ser um dos principais protocolos utilizados em internet das coisas, com isso foi lançado o MQTT 3.1 o qual pode ser utilizado sem precisar pagar por \textit{royaltys} ou taxas de propriedade.
+
+Com a abertura do protocolo a IBM fez investimentos para criar um ecossistema colaborativo para incentivar o seu uso, principalmente através da \textit{Eclipse Foundation}, uma corporação sem fins lucrativos que visa impulsionar projetos de software livre e tecnologias abertas\cite{historia_eclipse_f}, que gerência mais de 400 repositórios abertos\footnote{Github da Eclipse Foundation: \url{https://github.com/eclipse}}, muitos deles relacionados ao MQTT, como por exemplo:
+\begin{itemize}
+    \item\textbf{Bibliotecas Paho}\footnote{Implementação da biblioteca em Python:\url{https://github.com/eclipse/paho.mqtt.python}}: Tendo inicio em 2012/2013 o projeto Paho disponibiliza um conjunto de bibliotecas que implementam clientes MQTT em diversas linguagens de programação, sendo a mais conhecida delas em Python, porém foram escritas versões para C++, C, Rust, Java, Go, JavaScript, Ruby, D\ldots
+    \item\textbf{Broker Mosquitto}\footnote{Código fonte do Broker: \url{https://github.com/eclipse/mosquitto}}: Servidor que implementa o protocolo MQTT, também chamado de Broker. Por ser \textit{open source} possuí diversos \textit{forks} e customizações, bem como bibliotecas para facilitar seu uso e configuração.
+    \item\textbf{Visualizador de dados Streamsheet}\footnote{Github do projeto: \url{https://github.com/eclipse/streamsheets}}: Aplicação JavaScript que permite obter os dados vindos de dispositivos que se comunicam com MQTT, uma plataforma na qual não é necessário escrever código, basta realizar ações de maneira gráfica.
+\end{itemize}
+
+Além da implementação dos projetos supracitados a IBM também trabalhou por padronização no protocolo, em 2013 foi anunciado que o MQTT seria padronizado pela OASIS\cite{historia_introduction_mqtt}, empresa sem fins lucrativos que visa padronizar projetos abertos com aprovação de regras de políticas internacionais\cite{historia_oasis}.
+
+Após mais de um ano no dia 29 de outubro de 2014 o MQTT foi aprovado como padrão pela OASIS na sua versão 3.1.1, onde foram adicionados novos requisitos como clientes anônimos, mais códigos de erro ao se inscrever em determinado tópico entre outros.
+
+De 2014 até hoje o MQTT passou por diversas atualizações e melhorias, sendo 5.0 a última versão ratificada pela OASIS em março de 2019\cite{historia_introduction_mqtt}, especificando requisitos necessários para dispositivos IoT modernos, como tratamento de erros e interação com plataformas em nuvem\cite{historia_introduction_mqtt}.
+
+evolução histórica da tecnologia
+
+\section{Aplicações}
+Larissa
+
+\section{Embasamento teórico}
+Marco
+
+\section{Características técnicas}
+Marco
+
+método de enquadramento
+
+índices de desempenho
+
+\section{Segurança}
+Larissa
+
+\section{Caso de uso}
+
+
+
+\section{Conclusões}
+
+estrutura de cabeamento aplicável
+topologia lógica e física
+protocolo de acesso ao meio
+formato detalhado dos quadros
+taxas de transmissão
+aplicabilidade
+tendências da tecnologia
+métodos de controle de erro e controle de fluxo
+técnicas de codificação e/ou multiplexação
+
+\bibliography{ref}
+
+\end{document}
