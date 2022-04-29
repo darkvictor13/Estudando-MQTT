@@ -53,10 +53,6 @@
     Página~\insertframenumber~de~\inserttotalframenumber
 }
 
-%% Definindo o Autor e o título
-\newcommand{\prof}{Renato Bobsin Machado}
-\newcommand{\materia}{Redes de Computadores}
-
 \author[Grupo: MQTT]{Larissa L. Wong \and Marco A. G. Pedroso \and\\Victor E. Almeida}
 
 \title{Protocolo MQTT para sistemas de IoT}
@@ -196,6 +192,55 @@
 
 \section{Aplicações}\label{Aplicacoes}
 
+\begin{frame}
+    \frametitle{Aplicações em IoT}
+    \begin{itemize}
+        \item Uso Doméstico e Educacional
+        \item Uso Industrial
+            \begin{itemize}
+                \item BMW Mobility Services
+                \item Matternet Autonomous Drones
+            \end{itemize}
+    \end{itemize}
+    \begin{figure}
+        \centering
+        \includegraphics[width=.4\textwidth]{drivenow_logo}
+        \includegraphics[width=.4\textwidth]{matternet_logo}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{BMW Mobility Services}
+    \begin{itemize}
+        \item Drive Now;
+        \item Serviço de compartilhamento de veículos;
+        \item Realização de tarefas de modo remoto;
+        \item Presença em 12 cidades na Europa;
+        \item Uso do protocolo MQTT;
+    \end{itemize}
+     \begin{figure}[!htb]
+         \centering
+        \includegraphics[width=.6\textwidth]{drive_now}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Matternet Autonomous Drones}
+    \begin{itemize}
+        \item Drones para transporte de amostras;
+        \item Obrigatoriedades legais;
+                \begin{itemize}
+                    \item Monitoramento dos voos
+                    \item Acesso em tempo real a dados
+                    \item Controle remoto dos drones
+                \end{itemize}
+        \item Uso do protocolo MQTT;
+    \end{itemize}
+    \begin{figure}[!htb]
+        \includegraphics[width=.6\textwidth]{matternet_drone}
+    \end{figure}
+\end{frame}
+
 \section{Embasamento teórico}\label{Embasamento teórico}
 
 \begin{frame}
@@ -302,6 +347,48 @@
 \section{Características técnicas}\label{Características técnicas}
 
 \section{Segurança}\label{Segurança}
+
+\begin{frame}
+    \frametitle{Fatores de Risco}
+    \begin{itemize}
+        \item Grande quantidade de dispositivos IoT
+        \item Baixo suporte para mecanismos de segurança convencionais
+        \item Ataques DDoS
+        \item Roubo de informações
+        \item Obtenção do controle dos dispositivos
+    \end{itemize}
+        
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ataques DDoS - Distributed Denial of Service}
+    \begin{itemize}
+        \item Um dos tipos de ataques mais comuns
+        \item Interrupção no tráfego de servidores, serviços ou rede por meio de grande fluxo de pacotes;
+        \item Botnets;
+                \begin{itemize}
+                \item Dispositivos infectados por malware
+            \end{itemize}
+        \item Dificuldade na verificação contra botnets;
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Soluções para Diminuição dos Riscos}
+    \begin{itemize}
+        \item Realização de autenticação;
+        \item Uso de algoritmos e protocolos de criptografia;
+        \item Uso de VPN;
+        \item Detecção de atividades suspeitas;
+        \item Secure MQTT
+                \begin{itemize}
+                    \item TLS - Transport Layer Security
+                    \item Utilização da porta 8833
+                    \item Formato de uso cadastrado na IANA (Internet Assigned Numbers Authority)
+                \end{itemize}
+    \end{itemize}
+\end{frame}
+
 
 \section{Prática}\label{Prática}
 \begin{frame}
