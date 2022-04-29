@@ -8,6 +8,7 @@
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{beamerthemeshadow}
+\usepackage{multirow}
 
 \graphicspath{{./images/} {../diagrams/} {../doc/images}}
 \setbeamertemplate{caption}[numbered]
@@ -56,7 +57,7 @@
 \newcommand{\prof}{Renato Bobsin Machado}
 \newcommand{\materia}{Redes de Computadores}
 
-\author[Grupo: MQTT]{Larissa L. Wong \and Marco A. G. Pedroso \and Victor E. Almeida}
+\author[Grupo: MQTT]{Larissa L. Wong \and Marco A. G. Pedroso \and\\Victor E. Almeida}
 
 \title{Protocolo MQTT para sistemas de IoT}
 \subtitle{Um estudo técnico/prático}
@@ -193,6 +194,115 @@
     \end{itemize}
 \end{frame}
 
+\section{Aplicações}\label{Aplicacoes}
+
+\section{Embasamento teórico}\label{Embasamento teórico}
+
+\begin{frame}
+    \frametitle{Titulo}
+
+    \begin{table}[h!]\caption{Estrutura básica comum a todos os pacotes MQTT.}
+        \centering
+        \begin{tabular}{|l|}
+            \hline
+            \textbf{Cabeçalho fixo}     \\ \hline
+            \textbf{Cabeçalho variável} \\ \hline
+            \textbf{Carga útil}         \\ \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Titulo}
+    \begin{table}[h!]\caption{Estrutura do cabeçalho fixo utilizado no protocolo MQTT.}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|c|cccccccc|}
+                \hline
+                \textbf{Bit} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{7}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{6}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{5}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{4}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{3}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{2}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{1}} &
+                \multicolumn{1}{m{.08\textwidth}|}{\textbf{0}} \\ \hline
+                %\textbf{0} \\ \hline
+                \textbf{Byte 1} & \multicolumn{4}{c|}{\textbf{Tipo de pacote MQTT}} & \multicolumn{4}{c|}{\textbf{Sinais específicos do pacote}} \\ \hline
+                \textbf{Byte 2} & \multicolumn{8}{c|}{\multirow{2}{*}{\textbf{Espaço restante}}}                                                 \\ \cline{1-1}
+                \textbf{. . .}  & \multicolumn{8}{c|}{}                                                                                          \\ \hline
+            \end{tabular}%
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Titulo}
+    \begin{table}[]\caption{Tipos de pacotes utilizados pelo protocolo MQTT -- Parte I.}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|l|l|l|l|}
+                \hline
+                \multicolumn{1}{|c|}{Tipo} & \multicolumn{1}{c|}{Código} & \multicolumn{1}{c|}{Remetente} & \multicolumn{1}{c|}{Descrição} \\ \hline
+                Reserved    & 0  & -        & Reservado                                \\ \hline
+                CONNECT     & 1  & Cliente  & Solicitação 				de conexão     \\ \hline
+                CONNACK     & 2  & Servidor & Confirmação de conexão                   \\ \hline
+                PUBLISH     & 3  & Ambos    & Publicar mensagem                        \\ \hline
+                PUBACK      & 4  & Ambos    & Publicar confirmação (QoS 1)             \\ \hline
+                PUBREC      & 5  & Ambos    & Publicar recebimento (QoS 2 – parte 1)   \\ \hline
+                PUBREL      & 6  & Ambos    & Publicar lançamento (QoS 2 – parte 2)    \\ \hline
+                PUBCOMP     & 7  & Ambos    & Publicar conclusão (QoS 2 – parte 3)     \\ \hline
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Titulo}
+    \begin{table}[]\caption{Tipos de pacotes utilizados pelo protocolo MQTT -- Parte II.}
+        \centering
+        \resizebox{\textwidth}{!}{%
+            \begin{tabular}{|l|l|l|l|}
+                \hline
+                \multicolumn{1}{|c|}{Tipo} & \multicolumn{1}{c|}{Código} & \multicolumn{1}{c|}{Remetente} & \multicolumn{1}{c|}{Descrição} \\ \hline
+                SUBSCRIBE   & 8  & Cliente  & Solicitação de inscrição                 \\ \hline
+                SUBACK      & 9  & Servidor & Confirmação de inscrição                 \\ \hline
+                UNSUBSCRIBE & 10 & Cliente  & Solicitação de cancelamento de inscrição \\ \hline
+                UNSUBACK    & 11 & Servidor & Confirmação de cancelamento de inscrição \\ \hline
+                PINGREQ     & 12 & Cliente  & Solicitação de PING                      \\ \hline
+                PINGRESP    & 13 & Servidor & Resposta de PING                         \\ \hline
+                DISCONNECT  & 14 & Ambos    & Notificação de desconexão                \\ \hline
+                AUTH        & 15 & Ambos    & Troca de autenticação                    \\ \hline
+            \end{tabular}
+        }
+    \end{table}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Titulo}
+    \begin{itemize}
+        \item \textbf{CONNECT} – é o primeiro pacote que deve ser enviado pelo cliente no momento após ter estabelecido um conexão de rede com servidor. Entre as informações enviadas se encontra um identificador único para o cliente, entre outras informações opcionais como usuário e senha.
+        \item \textbf{CONNACK} – é o pacote enviado pelo servidor em resposta ao recebimento do pacote CONNECT enviado pelo cliente, e que deve ser recebido antes do pacote AUTH. Em caso do cliente não receber um pacote do tipo CONNACK em um tempo razoável o mesmo deve encerar a conexão com o servidor e tentar novamente.
+        \item \textbf{PUBLISH} – são os pacotes encarregados de carregar as mensagens entre o servidor e os clientes podendo ir em ambas as direções.
+        \item \textbf{PUBACK} – é o pacote enviado em resposta a um PUBLISH realizado com QoS 1.
+        \item \textbf{PUBREC} – é o pacote enviado em resposta a um PUBLISH representa a segunda parte do intercambio de mensagens realizado com QoS 2.
+        \item \textbf{PUBREL} – é o pacote enviado em resposta a um PUBREC e representa a terceira parte do intercambio de mensagens realizado com QoS 2.
+        \item \textbf{PUBCOMP} – é o pacote enviado em resposta a um PUBREL e representa a quarta e última parte do intercambio de mensagens realizado com QoS 2.
+        \item \textbf{SUBSCRIBE} – é o pacote enviado pelo cliente ao servidor como solicitude para a criação de uma ou mais assinaturas, registrando o interesse em receber informação de um ou mais tópicos, junto com o tipo de qualidade do serviço máxima (QoS) desejada com a qual o servidor pode enviar uma mensagem ao cliente.
+        \item \textbf{SUBACK} – é o pacote enviado pelo servidor ao cliente com o objetivo de confirmar o recebimento e processamento de um pacote do tipo SUBSCRIBE. Entre as informações contidas pelo pacote tem uma lista indicando a qualidade do serviço concedida ao cliente para cada tópico e em caso de ter sido negada a subscrição é enviado um sinal justificando o motivo do mesmo.
+            UNSUBSCRIBE
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Titulo}
+\end{frame}
+
+\section{Características técnicas}\label{Características técnicas}
+
+\section{Segurança}\label{Segurança}
+
 \section{Prática}\label{Prática}
 \begin{frame}
     \frametitle{Dispositivos e softwares da parte prática}
@@ -200,7 +310,7 @@
         \item Esp32:
             \begin{itemize}
                 \item Sensor Adafruit BMP-280;
-                \item Relay para ligar lâmpada;
+                \item Led embutido no Esp32;
                 \item C/C++ (Framework Arduino e ESP-IDF);
             \end{itemize}
         \item Raspberry:
@@ -219,6 +329,32 @@
         \caption{\label{fig:aplication} Dispositivos e tópicos utilizados}
     \end{figure}
 \end{frame}
+
+\begin{frame}[t,fragile,allowframebreaks]{\insertsectionhead}
+    \frametitle{Códigos Fonte}
+    \begin{lstlisting}
+void setup() {
+    if (!sensor.begin(BMP280_ADDRESS)) {
+        if(!sensor.begin(BMP280_ADDRESS_ALT)) {
+            delay(1000);
+            ESP.restart();
+        }
+    }
+    pinMode(LED_PIN, OUTPUT);
+    wifiConnect();
+    MqttConnect();
+    xTaskCreate(taskSendTemperature, "send", 20000, NULL, 1, &handle);
+}
+
+void loop() {
+    if (!mqttClient.connected()) {
+        MqttConnect();
+    }
+    mqttClient.loop();
+}
+    \end{lstlisting}
+\end{frame}
+
 \begin{frame}
     \frametitle{Mão na massa!!}
     \begin{figure}

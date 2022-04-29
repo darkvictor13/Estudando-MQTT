@@ -96,10 +96,12 @@ void callbackMqtt(char* topic, byte* message, unsigned int length) {
     if (!strcmp(buffer, "liga")) {
         LOGD("acendendo a luz");
         digitalWrite(LED_PIN, HIGH);
-    } else {
+    } else if (!strcmp(buffer, "desliga")) {
         LOGD("apagando a luz");
         digitalWrite(LED_PIN, LOW);
-    }
+    }else {
+		LOGE("Mensagem [%s] inválida no tópico [%s]", buffer, topic);
+	}
 }
 
 void wifiConnect() {
@@ -134,9 +136,9 @@ void taskSendTemperature(void*) {
     char temperature_buffer[8];
     while (true) {
         const auto temperature = sensor.readTemperature();
-        LOGD("Temperatura lida = %.2f", temperature);
         sprintf(temperature_buffer, "%.2f", temperature);
-        LOGD("Temperatura convertida = %.2f", temperature_buffer);
+        LOGD("Temperatura = %s", temperature_buffer);
+
         if (mqttClient.publish(PUBLISH_TOPIC, temperature_buffer)) {
             LOGD("Enviei dado");
         } else {
