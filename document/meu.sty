@@ -25,6 +25,7 @@
 \RequirePackage{amsmath}
 \RequirePackage[brazilian,hyperpageref]{backref}
 \RequirePackage[num,overcite,abnt-emphasize=bf]{abntex2cite}
+\RequirePackage{multirow}
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
 
@@ -82,8 +83,8 @@
 
 \newcommand{\prof}{Renato Bobsin Machado}
 \newcommand{\materia}{Redes de Computadores}
-\author{Larissa Lewartoski Wong\and\\Marco A. Guerra\and\\Victor E. Almeida}
-\title{Protocolo MQTT para sistemas de IoT}
+\author{Larissa L. Wong\and\\Marco A. Guerra\and\\Victor E. Almeida}
+\title{IoT: protocolo MQTT}
 \date{\today}
 
 %% zera a página
@@ -150,8 +151,8 @@
 	\end{titlepage}
 
 	\pagestyle{fancy}
-	\fancyfoot[L]{Matéria:~\materia}
-	\fancyfoot[R]{Prof:~\prof}
+	\fancyfoot[L]{\materia}
+	\fancyfoot[R]{IoT: protocolo MQTT.}
 	\fancyhead[L]{}
 	\fancyhead[R]{página:~\thepage/\pageref{LastPage}}
 }

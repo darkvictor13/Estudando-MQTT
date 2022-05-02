@@ -53,7 +53,7 @@
     Página~\insertframenumber~de~\inserttotalframenumber
 }
 
-\author[Grupo: MQTT]{Larissa L. Wong \and Marco A. G. Pedroso \and\\Victor E. Almeida}
+\author[Grupo: MQTT]{Larissa L. Wong\and\\Marco A. G. Pedroso\and\\Victor E. Almeida}
 
 \title{Protocolo MQTT para sistemas de IoT}
 \subtitle{Um estudo técnico/prático}
@@ -243,8 +243,54 @@
 
 \section{Embasamento teórico}\label{Embasamento teórico}
 
+\begin{frame}[allowframebreaks]
+    \frametitle{Embasamento teórico - Cliente}
+    
+    \textbf{Cliente}: programa ou dispositivo que irá enviar ou receber informação. Nesse sentido o cliente deve ser capaz de:
+    \begin{itemize}
+        \item iniciar uma conexão com o servidor,
+        \item realizar a publicação de informações em tópicos,
+        \item realizar a subscrição a tópicos de interesse,
+        \item realizar o cancelamento de uma subscrição e,
+        \item finalizar uma conexão com o servidor.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Embasamento teórico - Broker}
+    
+    \textbf{Broker}: programa ou serviço que intermediá e gerência a informação, o envio e recebimento de dados dos clientes, é comum se referir ao mesmo como servidor. Nesse sentido o servidor deve ser capaz de:
+    \begin{itemize}
+        \item gerencia as conexões como os clientes,
+        \item gerenciar as mensagens publicadas pelos clientes,
+        \item gerenciar as subscrições dos clientes e,
+        \item retransmitir as mensagens recebidas aos clientes.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Embasamento teórico}
+    \begin{itemize}
+    		\item \textbf{Conexão de rede}: se refere ao serviço provido pelo protocolo de comunicação na camada subjacente (TCP/IP) ao protocolo MQTT, e que permite o envio de informação entre os dispositivos.
+    		\item \textbf{Mensagem}: representa a informação que se deseja transmitir e que portanto constitui o objetivo da comunicação. De forma geral, e pelas caraterísticas do protocolo, a mensagem deve ocupar o mínimo espaço possível - na maioria dos casos é um único valor.
+    		\item \textbf{Cliente}: programa ou dispositivo que irá enviar ou receber informação. Nesse sentido o cliente deve ser capaz de:
+    		\item \textbf{Sessão}: se corresponde com o período de interação entre um cliente e um servidos, durante o qual é mantido um grupo de informações que representam o estado da comunicação, podendo ser composto por mais de uma conexão.
+    		\item \textbf{Subscrição}: é o ato de que o cliente desempenha para indicar ao servidor interesse em receber atualizações sobre a mudança de um tópico. Dessa forma, uma subscrição se encontra composta por um Filtro de Tópicos, para um ou mais tópicos, e um valor indicando a Qualidade de Serviço deseja (QoS).
+    		\item \textbf{Subscrição compartilhadas}: são subscrições que se encontram associadas com mais de uma sessão de comunicação entre o cliente e o servidor. Dessa forma, permitem um maior rango de padrões de comunicação.
+    		\item \textbf{Caracteres mágicos}: também chamados de Wildcards, permitem ao cliente indicar interesse em receber notificações de mais um tópico, para isso fazendo uso de caracteres que definem o padrão dos tópicos desejados.
+    		\item \textbf{Nome de Tópico}: rótulo ou identificador de uma informação específica dentro do broker e que é constantemente atualizada pelos cliente quando publicam uma nova informação no tópico.
+    		\item \textbf{Filtro de Tópico}: é uma expressão contida numa subscrição é que se corresponde com um ou mais tópicos
+    		\item \textbf{Paquete MQTT}: conjunto de informação útil à comunicação cliente-servidor envida através da conexão de rede. O protocolo MQTT especifica 15 tipos de pacotes diferentes, os quais serão especificados a continuação.
+    \end{itemize}
+    
+\end{frame}
+
+\section{Características técnicas}\label{Características técnicas}
+
 \begin{frame}
-    \frametitle{Titulo}
+    \frametitle{Estrutura básica dos pacotes}
 
     \begin{table}[h!]\caption{Estrutura básica comum a todos os pacotes MQTT.}
         \centering
@@ -255,10 +301,11 @@
             \textbf{Carga útil}         \\ \hline
         \end{tabular}
     \end{table}
+    
 \end{frame}
 
 \begin{frame}
-    \frametitle{Titulo}
+    \frametitle{Estrutura do cabeçalho fixo}
     \begin{table}[h!]\caption{Estrutura do cabeçalho fixo utilizado no protocolo MQTT.}
         \centering
         \resizebox{\textwidth}{!}{%
@@ -280,10 +327,15 @@
             \end{tabular}%
         }
     \end{table}
+    
+\textbf{Sinais específicos do pacote}: complementa a informação do tipo do pacote.
+
+\textbf{Espaço restante}: informação útil e de controle dependentes de cada tipo de pacote.
+
 \end{frame}
 
 \begin{frame}
-    \frametitle{Titulo}
+    \frametitle{Tipos de pacotes}
     \begin{table}[]\caption{Tipos de pacotes utilizados pelo protocolo MQTT -- Parte I.}
         \centering
         \resizebox{\textwidth}{!}{%
@@ -304,7 +356,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Titulo}
+    \frametitle{Tipos de pacotes}
     \begin{table}[]\caption{Tipos de pacotes utilizados pelo protocolo MQTT -- Parte II.}
         \centering
         \resizebox{\textwidth}{!}{%
@@ -325,26 +377,31 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]
-    \frametitle{Titulo}
+    \frametitle{Tipos de pacotes}
     \begin{itemize}
-        \item \textbf{CONNECT} – é o primeiro pacote que deve ser enviado pelo cliente no momento após ter estabelecido um conexão de rede com servidor. Entre as informações enviadas se encontra um identificador único para o cliente, entre outras informações opcionais como usuário e senha.
-        \item \textbf{CONNACK} – é o pacote enviado pelo servidor em resposta ao recebimento do pacote CONNECT enviado pelo cliente, e que deve ser recebido antes do pacote AUTH. Em caso do cliente não receber um pacote do tipo CONNACK em um tempo razoável o mesmo deve encerar a conexão com o servidor e tentar novamente.
-        \item \textbf{PUBLISH} – são os pacotes encarregados de carregar as mensagens entre o servidor e os clientes podendo ir em ambas as direções.
-        \item \textbf{PUBACK} – é o pacote enviado em resposta a um PUBLISH realizado com QoS 1.
-        \item \textbf{PUBREC} – é o pacote enviado em resposta a um PUBLISH representa a segunda parte do intercambio de mensagens realizado com QoS 2.
-        \item \textbf{PUBREL} – é o pacote enviado em resposta a um PUBREC e representa a terceira parte do intercambio de mensagens realizado com QoS 2.
-        \item \textbf{PUBCOMP} – é o pacote enviado em resposta a um PUBREL e representa a quarta e última parte do intercambio de mensagens realizado com QoS 2.
-        \item \textbf{SUBSCRIBE} – é o pacote enviado pelo cliente ao servidor como solicitude para a criação de uma ou mais assinaturas, registrando o interesse em receber informação de um ou mais tópicos, junto com o tipo de qualidade do serviço máxima (QoS) desejada com a qual o servidor pode enviar uma mensagem ao cliente.
-        \item \textbf{SUBACK} – é o pacote enviado pelo servidor ao cliente com o objetivo de confirmar o recebimento e processamento de um pacote do tipo SUBSCRIBE. Entre as informações contidas pelo pacote tem uma lista indicando a qualidade do serviço concedida ao cliente para cada tópico e em caso de ter sido negada a subscrição é enviado um sinal justificando o motivo do mesmo.
-            UNSUBSCRIBE
+        \item \textbf{CONNECT - Requisição de Conexão}
+    		\item \textbf{CONNACK - Reconhecimento de conexão}
+    		\item \textbf{PUBLISH - Publicar mensagem}
+    		\item \textbf{PUBACK - Reconhecimento de publicação}
+    		\item \textbf{PUBREC - Recebimento de publicação}
+    		\item \textbf{PUBREL - Liberação de publicação}
+    		\item \textbf{PUBCOMP - Publicação completada}
+    		\item \textbf{SUBSCRIBE - Requisição de subscrição}
     \end{itemize}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Titulo}
+\begin{frame}[allowframebreaks]
+    \frametitle{Tipos de pacotes}
+    \begin{itemize}
+    		\item \textbf{SUBACK - Reconhecimento de subscrição}
+    		\item \textbf{UNSUBSCRIBE - Requisição de cancelamento de subscrição}
+    		\item \textbf{UNSUBACK - Reconhecimento de cancelamento de subscrição}
+    		\item \textbf{PINGREQ - Requisição de PING}
+    		\item \textbf{PINGRESP - Resposta a uma Requizição de PING}
+    		\item \textbf{DISCONNECT - Requisição de desconexão}
+    		\item \textbf{AUTH - Intercambio de autentificações}
+    \end{itemize}
 \end{frame}
-
-\section{Características técnicas}\label{Características técnicas}
 
 \section{Segurança}\label{Segurança}
 
