@@ -71,11 +71,6 @@
 \tableofcontents
 \end{frame}
 
-\begin{frame}
-    \frametitle{Colocar mais algo para introduzir}
-    TODO
-\end{frame}
-
 \section{História}\label{História}
 \begin{frame}
     \frametitle{Criação do Protocolo}
@@ -275,7 +270,6 @@
     \begin{itemize}
     		\item \textbf{Conexão de rede}: se refere ao serviço provido pelo protocolo de comunicação na camada subjacente (TCP/IP) ao protocolo MQTT, e que permite o envio de informação entre os dispositivos.
     		\item \textbf{Mensagem}: representa a informação que se deseja transmitir e que portanto constitui o objetivo da comunicação. De forma geral, e pelas caraterísticas do protocolo, a mensagem deve ocupar o mínimo espaço possível - na maioria dos casos é um único valor.
-    		\item \textbf{Cliente}: programa ou dispositivo que irá enviar ou receber informação. Nesse sentido o cliente deve ser capaz de:
     		\item \textbf{Sessão}: se corresponde com o período de interação entre um cliente e um servidos, durante o qual é mantido um grupo de informações que representam o estado da comunicação, podendo ser composto por mais de uma conexão.
     		\item \textbf{Subscrição}: é o ato de que o cliente desempenha para indicar ao servidor interesse em receber atualizações sobre a mudança de um tópico. Dessa forma, uma subscrição se encontra composta por um Filtro de Tópicos, para um ou mais tópicos, e um valor indicando a Qualidade de Serviço deseja (QoS).
     		\item \textbf{Subscrição compartilhadas}: são subscrições que se encontram associadas com mais de uma sessão de comunicação entre o cliente e o servidor. Dessa forma, permitem um maior rango de padrões de comunicação.
