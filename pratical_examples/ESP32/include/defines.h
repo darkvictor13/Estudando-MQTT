@@ -14,7 +14,7 @@
  * @brief Senha da Rede de wifi a qual deseja conectar
  * rode ip r | grep default ou ip a | grep "inet "
  */
-#define RASP_BROKER_IP "192.168.1.113"
+#define RASP_BROKER_IP "192.168.1.100"
 
 /**
  * @brief Caso tenha usuários cadastrados ao broker, informe a senha equivalente

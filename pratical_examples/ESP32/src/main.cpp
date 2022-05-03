@@ -129,6 +129,7 @@ void MqttConnect() {
             return;
         }
         LOGD("Reconectando to Broker MQTT...");
+		delay(1000);
     }
 }
 
